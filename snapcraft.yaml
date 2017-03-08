@@ -1,0 +1,35 @@
+name: wifi-ap-client
+version: 1
+confinement: strict
+summary: Example client for the wifi-ap snap
+description: |
+  An example snap which shows how clients can talk to
+  the management service provided by the wifi-ap snap.
+  This gives an easy to use application which allows to
+  call any of the available API endpoints defined in
+  https://docs.ubuntu.com/core/en/stacks/network/wifi-ap/docs/reference/rest-api
+
+  For example you can set the SSID which should be used by calling
+
+  $ wifi-ap-example-client
+
+  The source of this snap is available at
+  https://github.com/canonical-system-enablement/wifi-ap-example-client
+grade: stable
+
+plugs:
+  control:
+    interface: content
+    content: socket-directory
+    target: $SNAP_COMMON/sockets
+
+apps:
+  wifi-ap-client:
+    command: bin/client
+    plugs:
+      - network
+
+parts:
+  wifi-ap-client:
+    plugin: go
+    source: cmd/client
